@@ -1,0 +1,16 @@
+{
+    "name": "lenovo/wallet-app",
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+
+        }
+    },
+    "authors": [
+        {
+            "name": "Mehdi-133",
+            "email": "mehdikarbitou@gmail.com"
+        }
+    ]
+   
+}
