@@ -72,6 +72,8 @@ class User
     }
 
     public function emailExists($email): bool
+
+    
 {
     $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
     $stmt = $this->db->prepare($sql);
