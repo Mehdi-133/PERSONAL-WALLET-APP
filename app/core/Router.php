@@ -34,7 +34,7 @@ class Router
                 (new AuthController())->login();
                 break;
 
-            case '/walletApp/app/views/auth/register.php':
+            case '/auth/register':
                 (new AuthController())->register();
                 break;
 

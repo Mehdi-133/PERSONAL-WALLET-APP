@@ -23,7 +23,7 @@ class User
 
     public function getProfile( $id)
     {
-        $sql = "SELECT id, nom, email FROM users WHERE id = :id LIMIT 1";
+        $sql = "SELECT id, name, email FROM users WHERE id = :id LIMIT 1";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $id]);
 
@@ -32,13 +32,13 @@ class User
 
     public function register( $nom,  $email,  $password): bool
     {
-        $sql = "INSERT INTO users (nom, email, password)
-                VALUES (:nom, :email, :password)";
+        $sql = "INSERT INTO users (name, email, password)
+                VALUES (:name, :email, :password)";
 
         $stmt = $this->db->prepare($sql);
 
         return $stmt->execute([
-            'nom'      => $nom,
+            'name'      => $nom,
             'email'    => $email,
             'password' => password_hash($password, PASSWORD_DEFAULT)
         ]);
@@ -70,4 +70,14 @@ class User
         session_unset();
         session_destroy();
     }
+
+    public function emailExists($email): bool
+{
+    $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
+    $stmt = $this->db->prepare($sql);
+    $stmt->execute(['email' => $email]);
+    
+    return $stmt->fetch() !== false;
 }
+}
+

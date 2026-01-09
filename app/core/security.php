@@ -4,7 +4,7 @@ namespace App\Core;
 
 class Security
 {
-    
+
     private static function startSession(): void
     {
         if (session_status() === PHP_SESSION_NONE) {
@@ -12,7 +12,7 @@ class Security
         }
     }
 
-   
+
     public static function generateCSRFToken(): string
     {
         self::startSession();
@@ -24,7 +24,7 @@ class Security
         return $_SESSION['csrf_token'];
     }
 
-   
+
     public static function verifyCSRFToken(string $token): bool
     {
         self::startSession();
@@ -33,15 +33,14 @@ class Security
             isset($_SESSION['csrf_token']) &&
             hash_equals($_SESSION['csrf_token'], $token)
         ) {
-           
-            unset($_SESSION['csrf_token']);
+
             return true;
         }
 
         return false;
     }
 
-   
+
     public static function clean(string $value): string
     {
         return htmlspecialchars(
@@ -58,7 +57,7 @@ class Security
 
         if (!isset($_SESSION['user_id'])) {
             $_SESSION['error'] = 'Veuillez vous connecter.';
-            header('Location: ../views/auth/login.php');
+            header('Location: /walletApp/public/login');
             exit();
         }
     }
