@@ -48,8 +48,6 @@ class ProfileController
         exit();
     }
 
-
-
     public function profile(): void
     {
         Security::requireUser();
@@ -62,9 +60,12 @@ class ProfileController
         require __DIR__ . '/../views/profile/show.php';
     }
 
-
     public function updateProfile(): void
     {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
         Security::requireUser();
 
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -80,6 +81,8 @@ class ProfileController
 
         $name = Security::clean($_POST['name'] ?? '');
         $email = Security::clean($_POST['email'] ?? '');
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
 
         if (empty($name) || empty($email)) {
             $_SESSION['error'] = 'Name and email are required';
@@ -96,10 +99,44 @@ class ProfileController
         $user = new User();
         $userId = $_SESSION['user_id'];
 
-        if ($user->updateProfile($userId, $name, $email)) {
-            $_SESSION['success'] = 'Profile updated successfully!';
-        } else {
+        // Check if email already exists for another user
+        if ($user->emailExists($email)) {
+            $currentUser = $user->getProfile($userId);
+            if ($currentUser['email'] !== $email) {
+                $_SESSION['error'] = 'Email already exists';
+                header('Location: /walletApp/public/profile');
+                exit();
+            }
+        }
+
+        // Update basic profile info
+        $profileUpdated = $user->updateProfile($userId, $name, $email);
+
+        if (!$profileUpdated) {
             $_SESSION['error'] = 'Failed to update profile';
+            header('Location: /walletApp/public/profile');
+            exit();
+        }
+
+        // Handle password update if provided
+        if (!empty($currentPassword) && !empty($newPassword)) {
+            if (strlen($newPassword) < 6) {
+                $_SESSION['error'] = 'New password must be at least 6 characters';
+                header('Location: /walletApp/public/profile');
+                exit();
+            }
+
+            $passwordUpdated = $user->updatePassword($userId, $currentPassword, $newPassword);
+            
+            if (!$passwordUpdated) {
+                $_SESSION['error'] = 'Profile updated but failed to update password. Please check your current password.';
+                header('Location: /walletApp/public/profile');
+                exit();
+            }
+            
+            $_SESSION['success'] = 'Profile and password updated successfully!';
+        } else {
+            $_SESSION['success'] = 'Profile updated successfully!';
         }
 
         header('Location: /walletApp/public/profile');

@@ -4,12 +4,12 @@ namespace App\Core;
 
 use App\Controllers\AuthController;
 use App\Controllers\WalletController;
+use App\Controllers\ProfileController;
 
 class Router
 {
     public function run(): void
     {
-
         $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $basePath = '/walletApp/public';
         $uri = str_replace($basePath, '', $uri);
@@ -19,8 +19,7 @@ class Router
         }
 
         switch ($uri) {
-
-
+            // Auth routes
             case '/login':
                 (new AuthController())->showLogin();
                 break;
@@ -28,7 +27,6 @@ class Router
             case '/register':
                 (new AuthController())->showRegister();
                 break;
-
 
             case '/auth/login':
                 (new AuthController())->login();
@@ -42,9 +40,36 @@ class Router
                 (new AuthController())->logout();
                 break;
 
-
+            // Dashboard routes
             case '/dashboard':
                 (new WalletController())->dashboard();
+                break;
+
+            // Wallet routes
+            case '/wallet/budget':
+                (new WalletController())->setBudget();
+                break;
+
+            case '/wallet/expense':
+                (new WalletController())->addExpense();
+                break;
+
+            case '/expense/delete':
+                (new WalletController())->deleteExpense();
+                break;
+
+
+            case '/profile':
+                (new ProfileController())->profile();
+                break;
+
+            case '/profile/update':
+                (new ProfileController())->updateProfile();
+                break;
+
+
+            case '/category/add':
+                (new ProfileController())->addCategory();
                 break;
 
             default:
