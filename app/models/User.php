@@ -8,11 +8,6 @@ use App\Core\Database;
 class User
 {
 
-    private $id;
-    private $nom;
-    private $email;
-    private $password;
-
     private $db;
 
 
@@ -72,8 +67,6 @@ class User
     }
 
     public function emailExists($email): bool
-
-
     {
         $sql = "SELECT id FROM users WHERE email = :email LIMIT 1";
         $stmt = $this->db->prepare($sql);
@@ -96,7 +89,7 @@ class User
 
     public function updatePassword($user_id, $currentPassword, $newPassword)
     {
-   
+
         $sql = "SELECT password FROM users WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['id' => $user_id]);

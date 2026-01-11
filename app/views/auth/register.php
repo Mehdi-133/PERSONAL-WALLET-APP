@@ -36,28 +36,28 @@ if (session_status() === PHP_SESSION_NONE) {
                 
                 <div>
                     <label for="nom" class="block text-sm font-medium text-gray-700 mb-2">Full name</label>
-                    <input id="nom" name="nom" type="text" required
+                    <input id="nom" name="nom" type="text"  
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors text-sm"
                            placeholder="Enter your full name">
                 </div>
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email</label>
-                    <input id="email" name="email" type="email" required
+                    <input id="email" name="email" type="email" 
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors text-sm"
                            placeholder="Enter your email">
                 </div>
 
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
-                    <input id="password" name="password" type="password" required
+                    <input id="password" name="password" type="password" 
                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-colors text-sm"
                            placeholder="Create a password">
                     <p class="mt-1 text-xs text-gray-500">Must be at least 6 characters</p>
                 </div>
 
                 <div class="flex items-start">
-                    <input id="terms" name="terms" type="checkbox" required
+                    <input id="terms" name="terms" type="checkbox" 
                            class="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded mt-0.5">
                     <label for="terms" class="ml-2 block text-xs text-gray-700">
                         I agree to the <a href="#" class="text-purple-600 hover:text-purple-500 font-medium">Terms</a> and <a href="#" class="text-purple-600 hover:text-purple-500 font-medium">Privacy Policy</a>

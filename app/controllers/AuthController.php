@@ -63,7 +63,7 @@ class AuthController
 
         if (empty($nom) || empty($email) || empty($password)) {
             $_SESSION['error'] = 'Tous les champs sont requis';
-            header('Location:/walletApp/app/views/auth/register.php');
+            header('Location: /walletApp/public/register');
             exit();
         }
 
