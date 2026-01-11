@@ -23,6 +23,7 @@ class Expense
                 AND MONTH(e.expense_date) = MONTH(CURRENT_DATE()) 
                 AND YEAR(e.expense_date) = YEAR(CURRENT_DATE())
                 ORDER BY e.expense_date DESC";
+                
         
         $stmt = $this->db->prepare($sql);
         $stmt->execute(['user_id' => $user_id]);
