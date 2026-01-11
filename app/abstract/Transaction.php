@@ -19,7 +19,6 @@ abstract class Transaction implements FinancialCalculatorInterface
     
     abstract public function create(array $data): bool;
     abstract public function delete(int $id, int $userId): bool;
-    
     public function calculateTotal(array $amounts): float
     {
         return array_sum($amounts);
